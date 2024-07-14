@@ -32,12 +32,17 @@ public class MessageManager {
         while (!validLetter) {
             System.out.println(Constants.NEXT_LETTER);
             String input = scanner.nextLine().trim().toUpperCase();
-            if (input.length() != 1) {
+            if (input.length() == 0) {
+                showWrongLetterMessage(Constants.NOT_ENOUGH_LETTERS_MISTAKE);
+                continue;
+            } else if (input.length() != 1) {
                 showWrongLetterMessage(Constants.TOO_MUCH_LETTERS_MISTAKE);
                 continue;
             }
             letter = input.charAt(0);
-            if (letter != 1025 && (letter < 1040 || letter > 1071)) showWrongLetterMessage(Constants.ONLY_RUSSIAN_LETTER_MISTAKE);
+            if (letter != 1025 && (letter < 1040 || letter > 1071))
+                if (Character.isLetter(letter)) showWrongLetterMessage(Constants.ONLY_RUSSIAN_LETTER_MISTAKE);
+                else showWrongLetterMessage(Constants.INVALID_CHARACTER_MISTAKE);
             else validLetter = true;
         }
         return letter;

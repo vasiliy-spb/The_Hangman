@@ -24,12 +24,15 @@ public class Constants {
             1 — повторить раунд
             2 — начать игру с начала
             """;
+    public static final String INCORRECT_INPUT = "Выберите один из вариантов: ";
     public static final String SMALL_WORD_TEMPLATE = "______";
     public static final String MIDDLE_WORD_TEMPLATE = "_______";
     public static final String LARGE_WORD_TEMPLATE = "________";
     public static final String NEXT_LETTER = "Введите букву: ";
     public static final String ONLY_RUSSIAN_LETTER_MISTAKE = "Принимаются только русские буквы";
     public static final String TOO_MUCH_LETTERS_MISTAKE = "Принимаются только одна буква";
+    public static final String INVALID_CHARACTER_MISTAKE = "Такого символа не может быть в слове";
+    public static String NOT_ENOUGH_LETTERS_MISTAKE = "Нужно ввести какую-либо букву";
     public static final String[] SMALL_HANGMAN_PICTURE = {
             "_____\n     |\n     o\n",
             "    /",
@@ -63,10 +66,8 @@ public class Constants {
             1 — да
             2 — нет
             """;
-    public static final String INCORRECT_INPUT = "Выберите один из вариантов: ";
-
 }
-    /*
+/*
 
 _____
      |
@@ -74,5 +75,4 @@ _____
     /|\
     / \
 
-
-     */
+*/

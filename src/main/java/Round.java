@@ -20,7 +20,7 @@ public class Round {
         DictionaryManager dictionaryManager = new DictionaryManager();
         String wordString = dictionaryManager.getRandomWord(wordLength);
 
-//        System.out.println("слово: " + wordString);
+        System.out.println("слово: " + wordString);
 
         roundWord = new Word(wordString);
         switch (wordLength) {

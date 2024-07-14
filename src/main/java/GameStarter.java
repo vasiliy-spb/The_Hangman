@@ -9,7 +9,7 @@ public class GameStarter {
 
         int roundNumber = 1;
         Round round;
-        do {
+        while (true) {
             switch (level) {
                 case 2 -> wordLength = WordLength.MIDDLE;
                 case 3 -> wordLength = WordLength.LARGE;
@@ -30,7 +30,6 @@ public class GameStarter {
                 if (!repeat) break;
             }
         }
-        while (true);
 
         if (round.isWinner()) messageManager.showGameVictoryMessage();
         else messageManager.showGameOverMessage();

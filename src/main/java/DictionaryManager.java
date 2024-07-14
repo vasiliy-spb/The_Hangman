@@ -20,7 +20,7 @@ public class DictionaryManager {
 
     private String findWordInDictionary(int length) {
         if (length < 6 || length > 8) return "";
-        String fileName = "src/main/java/service/dictionary_" + length + ".txt";
+        String fileName = "src/main/resources/dictionary/dictionary_" + length + ".txt";
         List<String> wordList = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
