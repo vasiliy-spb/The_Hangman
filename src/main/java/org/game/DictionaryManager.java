@@ -1,3 +1,7 @@
+package org.game;
+
+import org.game.constants.DifficultyLevel;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,14 +10,12 @@ import java.util.List;
 import java.util.Random;
 
 public class DictionaryManager {
-
-    String getRandomWord(WordLength wordLength) {
+    public String getRandomWordForDifficultyLevel(DifficultyLevel difficultyLevel) {
         int length;
-        switch (wordLength) {
-            case SMALL -> length = 6;
-            case MIDDLE -> length = 7;
-            case LARGE -> length = 8;
-            default -> length = 0;
+        switch (difficultyLevel) {
+            case MEDIUM -> length = 7;
+            case HARD -> length = 8;
+            default -> length = 6;
         }
         return findWordInDictionary(length);
     }
@@ -32,6 +34,6 @@ public class DictionaryManager {
         }
         Random random = new Random();
         int index = random.nextInt(wordList.size());
-        return wordList.get(index - 1);
+        return wordList.get(index);
     }
 }
