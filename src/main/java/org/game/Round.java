@@ -1,6 +1,7 @@
 package org.game;
 
 import org.game.model.DifficultyLevel;
+import org.game.model.DisplayElements;
 import org.game.model.Messages;
 import org.game.model.Word;
 import org.game.ui.Dialog;
@@ -46,9 +47,10 @@ public class Round {
     }
 
     void refreshDisplay() {
-        writer.writeLine(Messages.CURRENT_WORD + roundWord.getStringRepresentation());
-        writer.writeLine(Messages.MISTAKES + "(" + roundWord.getMistakeCount() + ") " + roundWord.getMistakesHistory());
-        writer.writeLine(Messages.LETTER + lastLetterValue);
+        writer.writeLine(DisplayElements.CURRENT_WORD + roundWord.getStringRepresentation());
+        writer.writeLine(DisplayElements.MISTAKES + "(" + roundWord.getMistakeCount() + ") " + roundWord.getMistakesHistory());
+        writer.writeLine(DisplayElements.LETTER + lastLetterValue);
+        hangmanPrinter.printPicture(difficultyLevel, roundWord.getMistakeCount());
     }
 
     void makeMove() {
@@ -62,7 +64,6 @@ public class Round {
             gameOver();
         }
         refreshDisplay();
-        hangmanPrinter.printPicture(difficultyLevel, roundWord.getMistakeCount());
     }
 
     private boolean isCorrectLetter(char letterValue) {

@@ -1,6 +1,7 @@
 package org.game;
 
 import org.game.model.DifficultyLevel;
+import org.game.model.Keys;
 import org.game.model.Messages;
 import org.game.io.*;
 import org.game.ui.*;
@@ -25,8 +26,8 @@ public class GameStarter {
                 writer,
                 Messages.REPEAT_ROUND_MESSAGE,
                 Messages.INCORRECT_INPUT_MISTAKE,
-                Messages.YES_KEY,
-                Messages.NO_KEY
+                Keys.YES_KEY,
+                Keys.NO_KEY
         );
 
         Dialog<Character> characterDialog = new CharacterDialog(
