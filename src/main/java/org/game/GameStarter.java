@@ -1,8 +1,9 @@
 package org.game;
 
-import org.game.constants.DifficultyLevel;
-import org.game.constants.Messages;
-import org.game.dialogs.*;
+import org.game.model.DifficultyLevel;
+import org.game.model.Messages;
+import org.game.io.*;
+import org.game.ui.*;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class GameStarter {
                 writer,
                 Messages.ASK_LEVEL_MESSAGE,
                 Messages.WRONG_LEVEL_MESSAGE,
-                List.of(Messages.EASY_LEVEL_KEY, Messages.MEDIUM_LEVEL_KEY, Messages.HARD_LEVEL_KEY)
+                List.of(DifficultyLevel.EASY.getName(), DifficultyLevel.MEDIUM.getName(), DifficultyLevel.HARD.getName())
         );
 
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
@@ -76,43 +77,10 @@ public class GameStarter {
     }
 
     private static DifficultyLevel getDifficultyLevel(int difficultyLevelValue) {
-        return switch (difficultyLevelValue) {
-            case 2 -> DifficultyLevel.MEDIUM;
-            case 3 -> DifficultyLevel.HARD;
-            default -> DifficultyLevel.EASY;
-        };
+        return DifficultyLevel.values()[difficultyLevelValue - 1];
     }
 
     private static boolean isCurrentDifficultyLevelWasLast(Round round) {
-        return round.getWordLength().equals(DifficultyLevel.HARD);
+        return round.getDifficultyLevel().equals(DifficultyLevel.HARD);
     }
 }
-
-/*
-
-В начале игры:
-— приветствуем
-— спрашиваем уровень сложности
-— играем раунды
-
-В каждом раунде:
-— выводим номер раунда
-— обновляем дисплей
-— делаем ходы
-
-В каждый ход:
-— спрашиваем букву
-— проверяем букву
-— проверяем закончилась ли игра
-
-В конце раунда:
-— если раунд пройден
-    — если раунд не последний
-        — переходим на след раунд
-        — или заканчиваем игру (выигрыш)
-— если раунд не пройден
-    — спрашиваем, повторить ли раунд
-        — если да — повторяем раунд
-        — если нет, то завершаем игру (проигрыш)
-
- */

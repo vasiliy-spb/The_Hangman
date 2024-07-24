@@ -1,8 +1,8 @@
-package org.game.dialogs;
+package org.game.io;
 
 import java.io.PrintStream;
 
-public class ConsoleOutputWriter implements OutputWriter{
+public class ConsoleOutputWriter implements OutputWriter {
     private final PrintStream writer;
     public ConsoleOutputWriter() {
         this.writer = System.out;

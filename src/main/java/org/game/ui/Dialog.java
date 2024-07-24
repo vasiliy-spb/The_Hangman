@@ -1,4 +1,7 @@
-package org.game.dialogs;
+package org.game.ui;
+
+import org.game.io.InputReader;
+import org.game.io.OutputWriter;
 
 public abstract class Dialog<T> {
     final InputReader reader;

@@ -1,4 +1,4 @@
-package org.game.dialogs;
+package org.game.io;
 
 import java.util.Scanner;
 

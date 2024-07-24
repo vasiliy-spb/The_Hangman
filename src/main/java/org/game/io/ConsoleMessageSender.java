@@ -1,6 +1,4 @@
-package org.game;
-
-import org.game.dialogs.OutputWriter;
+package org.game.io;
 
 public class ConsoleMessageSender implements MessageSender {
     private final OutputWriter writer;

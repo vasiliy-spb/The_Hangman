@@ -1,9 +1,12 @@
 package org.game;
 
-import org.game.constants.DifficultyLevel;
-import org.game.constants.Messages;
-import org.game.dialogs.Dialog;
-import org.game.dialogs.OutputWriter;
+import org.game.model.DifficultyLevel;
+import org.game.model.Messages;
+import org.game.model.Word;
+import org.game.ui.Dialog;
+import org.game.io.MessageSender;
+import org.game.io.OutputWriter;
+import org.game.ui.HangmanPrinter;
 
 public class Round {
 
@@ -12,7 +15,7 @@ public class Round {
     private boolean winner;
     private boolean gameOver;
     private char lastLetterValue;
-    private final HangmanPrinter hangmanPrinter;
+    private final HangmanPrinter<String> hangmanPrinter;
     private final DifficultyLevel difficultyLevel;
     private final MessageSender messageSender;
     private final Dialog<Character> characterDialog;
@@ -22,7 +25,7 @@ public class Round {
             Dialog<Character> characterDialog,
             DifficultyLevel difficultyLevel,
             String textForWord,
-            HangmanPrinter hangmanPrinter,
+            HangmanPrinter<String> hangmanPrinter,
             MessageSender messageSender) {
         this.writer = writer;
         this.characterDialog = characterDialog;
@@ -104,5 +107,9 @@ public class Round {
 
     public boolean isWinner() {
         return winner;
+    }
+
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
     }
 }

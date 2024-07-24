@@ -1,6 +1,6 @@
-package org.game;
+package org.game.ui;
 
-import org.game.constants.DifficultyLevel;
+import org.game.model.DifficultyLevel;
 
 public interface HangmanPrinter<T> {
     T[] getPictureForDifficultyLevel(DifficultyLevel difficultyLevel);

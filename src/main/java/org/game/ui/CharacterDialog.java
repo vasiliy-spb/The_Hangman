@@ -1,7 +1,8 @@
-package org.game.dialogs;
+package org.game.ui;
 
-import org.game.CharacterInputValidator;
-import org.game.constants.InputCharacterStatus;
+import org.game.model.InputCharacterStatus;
+import org.game.io.InputReader;
+import org.game.io.OutputWriter;
 
 public class CharacterDialog extends Dialog<Character> {
     private final CharacterInputValidator inputValidator;
@@ -24,6 +25,4 @@ public class CharacterDialog extends Dialog<Character> {
             writer.writeLine(inputCharacterStatus.getValue());
         }
     }
-
-
 }

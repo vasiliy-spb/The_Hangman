@@ -1,6 +1,6 @@
-package org.game;
+package org.game.ui;
 
-import org.game.constants.InputNumberStatus;
+import org.game.model.InputNumberStatus;
 
 public class NumberInputValidator {
     public InputNumberStatus validateIntegerValue(String input, int variantCount) {

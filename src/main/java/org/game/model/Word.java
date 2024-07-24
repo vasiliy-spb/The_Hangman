@@ -1,4 +1,4 @@
-package org.game;
+package org.game.model;
 
 import java.util.*;
 

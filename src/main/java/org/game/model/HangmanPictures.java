@@ -1,4 +1,4 @@
-package org.game.constants;
+package org.game.model;
 
 public final class HangmanPictures {
 
@@ -264,13 +264,3 @@ public final class HangmanPictures {
 """
     };
 }
-/*
-
-—————————+
-|/       |
-|        O
-|       /|\
-|       / \
-|
-
- */

@@ -1,8 +1,9 @@
 package org.game;
 
-import org.game.constants.DifficultyLevel;
-import org.game.constants.Messages;
-import org.game.dialogs.*;
+import org.game.model.DifficultyLevel;
+import org.game.model.Messages;
+import org.game.io.*;
+import org.game.ui.*;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class TestGameStarter {
                 writer,
                 Messages.ASK_LEVEL_MESSAGE,
                 Messages.WRONG_LEVEL_MESSAGE,
-                List.of(Messages.EASY_LEVEL_KEY, Messages.MEDIUM_LEVEL_KEY, Messages.HARD_LEVEL_KEY)
+                List.of(DifficultyLevel.EASY.getName(), DifficultyLevel.MEDIUM.getName(), DifficultyLevel.HARD.getName())
         );
 
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
@@ -78,14 +79,10 @@ public class TestGameStarter {
     }
 
     private static DifficultyLevel getDifficultyLevel(int difficultyLevelValue) {
-        return switch (difficultyLevelValue) {
-            case 2 -> DifficultyLevel.MEDIUM;
-            case 3 -> DifficultyLevel.HARD;
-            default -> DifficultyLevel.EASY;
-        };
+        return DifficultyLevel.values()[difficultyLevelValue - 1];
     }
 
     private static boolean isCurrentDifficultyLevelWasLast(Round round) {
-        return round.getWordLength().equals(DifficultyLevel.HARD);
+        return round.getDifficultyLevel().equals(DifficultyLevel.HARD);
     }
 }

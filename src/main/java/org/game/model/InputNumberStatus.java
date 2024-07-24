@@ -1,4 +1,4 @@
-package org.game.constants;
+package org.game.model;
 
 public enum InputNumberStatus {
     CORRECT_NUMBER (""),

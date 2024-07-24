@@ -1,6 +1,6 @@
-package org.game;
+package org.game.ui;
 
-import org.game.constants.InputCharacterStatus;
+import org.game.model.InputCharacterStatus;
 
 import java.util.Set;
 

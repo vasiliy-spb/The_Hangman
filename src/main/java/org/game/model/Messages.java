@@ -1,4 +1,4 @@
-package org.game.constants;
+package org.game.model;
 
 public final class Messages {
     public static final String ASK_LEVEL_MESSAGE = """
@@ -6,9 +6,6 @@ public final class Messages {
                 Выберете уровень сложности:
                 """;
     public static final String WRONG_LEVEL_MESSAGE = "Введён некорректный уровень сложности";
-    public static final String EASY_LEVEL_KEY = "лёгкий";
-    public static final String MEDIUM_LEVEL_KEY = "средний";
-    public static final String HARD_LEVEL_KEY = "сложный";
     public static final String YES_KEY = "Да";
     public static final String NO_KEY = "Нет";
     public static final String CURRENT_WORD = "Слово: ";

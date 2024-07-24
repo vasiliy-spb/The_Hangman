@@ -1,11 +1,12 @@
-package org.game;
+package org.game.ui;
 
-import org.game.constants.DifficultyLevel;
-import org.game.constants.HangmanPictures;
-import org.game.dialogs.OutputWriter;
+import org.game.model.DifficultyLevel;
+import org.game.model.HangmanPictures;
+import org.game.io.OutputWriter;
+import org.game.ui.HangmanPrinter;
 
 public class ConsoleHangmanPrinter implements HangmanPrinter<String> {
-    OutputWriter writer;
+    private final OutputWriter writer;
     public ConsoleHangmanPrinter(OutputWriter writer) {
         this.writer = writer;
     }

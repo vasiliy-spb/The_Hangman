@@ -1,4 +1,4 @@
-package org.game.dialogs;
+package org.game.io;
 
 public interface OutputWriter {
     void writeString(String str);

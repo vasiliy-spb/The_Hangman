@@ -1,4 +1,4 @@
-package org.game.constants;
+package org.game.model;
 
 public enum InputCharacterStatus {
     CORRECT_CHARACTER (""),

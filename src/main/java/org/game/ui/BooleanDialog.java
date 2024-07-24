@@ -1,7 +1,8 @@
-package org.game.dialogs;
+package org.game.ui;
 
-import org.game.NumberInputValidator;
-import org.game.constants.InputNumberStatus;
+import org.game.model.InputNumberStatus;
+import org.game.io.InputReader;
+import org.game.io.OutputWriter;
 
 import java.util.List;
 
