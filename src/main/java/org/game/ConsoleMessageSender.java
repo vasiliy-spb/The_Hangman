@@ -1,13 +1,21 @@
 package org.game;
 
-public class ConsoleMessageSender extends MessageSender {
+import org.game.dialogs.OutputWriter;
+
+public class ConsoleMessageSender implements MessageSender {
+    private final OutputWriter writer;
+
+    public ConsoleMessageSender(OutputWriter writer) {
+        this.writer = writer;
+    }
+
     @Override
     public void sendMessage(String message) {
-        System.out.println(message);
+        writer.writeLine(message);
     }
 
     @Override
     public void sendMessage(String message, int num) {
-        System.out.printf("%s %d\n", message, num);
+        writer.writeString(String.format("%s %d\n", message, num));
     }
 }

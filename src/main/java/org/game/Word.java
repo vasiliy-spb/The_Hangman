@@ -2,7 +2,7 @@ package org.game;
 
 import java.util.*;
 
-public class Word { // Б А Р Д А К
+public class Word {
     private Letter[] letters;
     final private List<Character> mistakeList;
     final private Set<Character> mistakeSet;
@@ -111,18 +111,6 @@ public class Word { // Б А Р Д А К
 
     }
 
-    public Letter[] getLetters() {
-        return letters;
-    }
-
-    public List<Character> getMistakeList() {
-        return mistakeList;
-    }
-
-    public Set<Character> getMistakeSet() {
-        return mistakeSet;
-    }
-
     public int getLettersCount() {
         return letters.length;
     }
@@ -131,6 +119,8 @@ public class Word { // Б А Р Д А К
     public String toString() {
         return "Word{" +
                 "letters=" + Arrays.toString(letters) +
+                ", mistakeList=" + mistakeList +
+                ", mistakeSet=" + mistakeSet +
                 '}';
     }
 }

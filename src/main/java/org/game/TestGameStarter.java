@@ -19,44 +19,6 @@ public class TestGameStarter {
                 List.of(Messages.EASY_LEVEL_KEY, Messages.MEDIUM_LEVEL_KEY, Messages.HARD_LEVEL_KEY)
         );
 
-        int level = levelDialog.input();
-
-        MessageSender messageSender = new ConsoleMessageSender();
-
-
-        int roundNumber = 1;
-        Round round;
-        while (true) {
-            DifficultyLevel difficultyLevel = getDifficultyLevel(level);
-            round = new Round(reader, writer, difficultyLevel);
-
-            messageSender.sendMessage(Messages.ROUND_NUMBER, roundNumber);
-            round.testStart();
-
-            if (round.isWinner()) {
-                roundNumber++;
-                if (isCurrentDifficultyLevelWasLast(round)) {
-                    break;
-                }
-                level++;
-            } else {
-                messageSender.sendMessage(Messages.LOSE_ROUND_MESSAGE);
-                if (!wantRepeatRound(reader, writer)) {
-                    break;
-                }
-            }
-        }
-
-        if (round.isWinner()) {
-            messageSender.sendMessage(Messages.VICTORY_GAME_MESSAGE);
-        } else {
-            messageSender.sendMessage(Messages.GAME_OVER_MESSAGE);
-        }
-
-    }
-
-    private static boolean wantRepeatRound(InputReader reader,
-                                           OutputWriter writer) {
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
                 reader,
                 writer,
@@ -65,7 +27,54 @@ public class TestGameStarter {
                 Messages.YES_KEY,
                 Messages.NO_KEY
         );
-        return repeatRoundDialog.input();
+
+        Dialog<Character> characterDialog = new CharacterDialog(
+                reader,
+                writer,
+                Messages.NEXT_LETTER,
+                Messages.GENERAL_LETTER_MISTAKE
+        );
+
+        DictionaryManager dictionaryManager = new DictionaryManager();
+        MessageSender messageSender = new ConsoleMessageSender(writer);
+        HangmanPrinter<String> hangmanPrinter = new ConsoleHangmanPrinter(writer);
+
+        int difficultyLevelNumber = levelDialog.getInput();
+        int roundNumber = 1;
+
+        while (true) {
+            DifficultyLevel difficultyLevel = getDifficultyLevel(difficultyLevelNumber);
+            String textForWord = dictionaryManager.getRandomWordForDifficultyLevel(difficultyLevel);
+            Round round = new Round(writer, characterDialog, difficultyLevel, textForWord, hangmanPrinter, messageSender);
+
+            System.out.println("Слово раунда: " + textForWord);
+
+            messageSender.sendMessage(Messages.ROUND_NUMBER, roundNumber);
+            round.testStart();
+
+            if (isRoundWon(round)) {
+                if (isCurrentDifficultyLevelWasLast(round)) {
+                    messageSender.sendMessage(Messages.VICTORY_GAME_MESSAGE);
+                    break;
+                }
+                roundNumber++;
+                difficultyLevelNumber++;
+            } else {
+                messageSender.sendMessage(Messages.LOSE_ROUND_MESSAGE);
+                if (!wantRepeatRound(repeatRoundDialog)) {
+                    messageSender.sendMessage(Messages.GAME_OVER_MESSAGE);
+                    break;
+                }
+            }
+        }
+    }
+
+    private static boolean isRoundWon(Round round) {
+        return round.isWinner();
+    }
+
+    private static boolean wantRepeatRound(Dialog<Boolean> repeatRoundDialog) {
+        return repeatRoundDialog.getInput();
     }
 
     private static DifficultyLevel getDifficultyLevel(int difficultyLevelValue) {

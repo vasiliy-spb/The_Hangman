@@ -2,34 +2,38 @@ package org.game;
 
 import org.game.constants.DifficultyLevel;
 import org.game.constants.Messages;
-import org.game.dialogs.CharacterDialog;
 import org.game.dialogs.Dialog;
-import org.game.dialogs.InputReader;
 import org.game.dialogs.OutputWriter;
 
 public class Round {
 
-    private final InputReader reader;
     private final OutputWriter writer;
-    private Word roundWord;
-    private final DifficultyLevel difficultyLevel;
+    private final Word roundWord;
     private boolean winner;
     private boolean gameOver;
     private char lastLetterValue;
-    private HangmanPrinter hangmanPrinter;
+    private final HangmanPrinter hangmanPrinter;
+    private final DifficultyLevel difficultyLevel;
+    private final MessageSender messageSender;
+    private final Dialog<Character> characterDialog;
 
-    public Round(InputReader reader, OutputWriter writer, DifficultyLevel difficultyLevel) {
-        this.reader = reader;
+    public Round(
+            OutputWriter writer,
+            Dialog<Character> characterDialog,
+            DifficultyLevel difficultyLevel,
+            String textForWord,
+            HangmanPrinter hangmanPrinter,
+            MessageSender messageSender) {
         this.writer = writer;
+        this.characterDialog = characterDialog;
         this.difficultyLevel = difficultyLevel;
+        this.roundWord = new Word(textForWord);
+        this.hangmanPrinter = hangmanPrinter;
+        this.messageSender = messageSender;
         this.lastLetterValue = '\0';
-        this.hangmanPrinter = new ConsoleHangmanPrinter();
     }
 
     void start() {
-        DictionaryManager dictionaryManager = new DictionaryManager();
-        String text = dictionaryManager.getRandomWordForDifficultyLevel(difficultyLevel);
-        roundWord = new Word(text);
         winner = false;
         gameOver = false;
         refreshDisplay();
@@ -39,32 +43,24 @@ public class Round {
     }
 
     void testStart() {
-        DictionaryManager dictionaryManager = new DictionaryManager();
-        String text = dictionaryManager.getRandomWordForDifficultyLevel(difficultyLevel);
-
-        System.out.println("слово: " + text);
-
-        roundWord = new Word(text);
-
         winner = false;
         gameOver = false;
         refreshDisplay();
         while (!gameOver) {
-            System.out.println("roundWord = " + roundWord);
+            writer.writeLine("roundWord = " + roundWord);
             makeMove();
         }
     }
 
     void refreshDisplay() {
-        System.out.println(Messages.CURRENT_WORD + roundWord.getStringRepresentation());
-        System.out.println(Messages.MISTAKES + "(" + roundWord.getMistakeCount() + ") " + roundWord.getMistakesHistory());
-        System.out.println(Messages.LETTER + lastLetterValue);
+        writer.writeLine(Messages.CURRENT_WORD + roundWord.getStringRepresentation());
+        writer.writeLine(Messages.MISTAKES + "(" + roundWord.getMistakeCount() + ") " + roundWord.getMistakesHistory());
+        writer.writeLine(Messages.LETTER + lastLetterValue);
     }
 
 
     void makeMove() {
-        Dialog<Character> dialog = new CharacterDialog(reader, writer, Messages.NEXT_LETTER, Messages.GENERAL_LETTER_MISTAKE);
-        lastLetterValue = Character.toUpperCase(dialog.input());
+        lastLetterValue = Character.toUpperCase(characterDialog.getInput());
         if (isCorrectLetter(lastLetterValue)) {
             roundWord.openLetter(lastLetterValue);
         } else {
@@ -93,7 +89,6 @@ public class Round {
     }
 
     void gameOver() {
-        MessageSender messageSender = new ConsoleMessageSender();
         gameOver = true;
         if (winner) {
             messageSender.sendMessage(Messages.VICTORY_ROUND_MESSAGE);

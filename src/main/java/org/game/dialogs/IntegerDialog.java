@@ -6,7 +6,7 @@ import org.game.constants.InputNumberStatus;
 import java.util.List;
 
 public class IntegerDialog extends Dialog<Integer> {
-    private List<String> keys;
+    private final List<String> keys;
 
     public IntegerDialog(InputReader reader, OutputWriter writer, String text, String errorMessage, String yesKey, String noKey) {
         super(reader, writer, text, errorMessage);
@@ -19,7 +19,7 @@ public class IntegerDialog extends Dialog<Integer> {
     }
 
     @Override
-    public Integer input() {
+    public Integer getInput() {
         writer.writeLine(this.getText());
         for (int i = 0; i < keys.size(); i++) {
             writer.writeString(String.format("%d — %s\n", i + 1, keys.get(i)));

@@ -17,7 +17,7 @@ public class StringIgnoreCaseDialog extends Dialog<String> {
     }
 
     @Override
-    public String input() {
+    public String getInput() {
         writer.writeString(this.getText());
         writer.writeString("(");
         for (int i = 0; i < keys.size(); i++) {

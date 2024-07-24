@@ -3,7 +3,7 @@ package org.game.dialogs;
 import java.io.PrintStream;
 
 public class ConsoleOutputWriter implements OutputWriter{
-    PrintStream writer;
+    private final PrintStream writer;
     public ConsoleOutputWriter() {
         this.writer = System.out;
     }

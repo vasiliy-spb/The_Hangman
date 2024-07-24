@@ -20,5 +20,5 @@ public abstract class Dialog<T> {
         return errorMessage;
     }
 
-    public abstract T input();
+    public abstract T getInput();
 }

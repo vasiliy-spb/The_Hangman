@@ -4,13 +4,13 @@ import org.game.CharacterInputValidator;
 import org.game.constants.InputCharacterStatus;
 
 public class CharacterDialog extends Dialog<Character> {
-    CharacterInputValidator inputValidator;
+    private final CharacterInputValidator inputValidator;
     public CharacterDialog(InputReader reader, OutputWriter writer, String text, String errorMessage) {
         super(reader, writer, text, errorMessage);
         this.inputValidator = new CharacterInputValidator();
     }
 
-    public Character input() {
+    public Character getInput() {
         writer.writeLine(this.getText());
         while (true) {
             String answer = reader.readOneLine().trim();
