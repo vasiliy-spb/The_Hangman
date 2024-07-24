@@ -4,9 +4,13 @@ import org.game.constants.DifficultyLevel;
 import org.game.constants.Messages;
 import org.game.dialogs.CharacterDialog;
 import org.game.dialogs.Dialog;
+import org.game.dialogs.InputReader;
+import org.game.dialogs.OutputWriter;
 
 public class Round {
 
+    private final InputReader reader;
+    private final OutputWriter writer;
     private Word roundWord;
     private final DifficultyLevel difficultyLevel;
     private boolean winner;
@@ -14,7 +18,9 @@ public class Round {
     private char lastLetterValue;
     private HangmanPrinter hangmanPrinter;
 
-    public Round(DifficultyLevel difficultyLevel) {
+    public Round(InputReader reader, OutputWriter writer, DifficultyLevel difficultyLevel) {
+        this.reader = reader;
+        this.writer = writer;
         this.difficultyLevel = difficultyLevel;
         this.lastLetterValue = '\0';
         this.hangmanPrinter = new ConsoleHangmanPrinter();
@@ -57,7 +63,7 @@ public class Round {
 
 
     void makeMove() {
-        Dialog<Character> dialog = new CharacterDialog(Messages.NEXT_LETTER, Messages.GENERAL_LETTER_MISTAKE);
+        Dialog<Character> dialog = new CharacterDialog(reader, writer, Messages.NEXT_LETTER, Messages.GENERAL_LETTER_MISTAKE);
         lastLetterValue = Character.toUpperCase(dialog.input());
         if (isCorrectLetter(lastLetterValue)) {
             roundWord.openLetter(lastLetterValue);

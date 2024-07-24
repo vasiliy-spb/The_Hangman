@@ -2,14 +2,15 @@ package org.game;
 
 import org.game.constants.DifficultyLevel;
 import org.game.constants.Messages;
-import org.game.dialogs.BooleanDialog;
-import org.game.dialogs.Dialog;
-import org.game.dialogs.IntegerDialog;
+import org.game.dialogs.*;
 
 import java.util.List;
 
 public class GameStarter {
     public static void main(String[] args) {
+
+        InputReader reader = new ConsoleInputReader();
+        OutputWriter writer = new ConsoleOutputWriter();
 
         String askLevelMessage = """
                 Игра Hangman начинается..
@@ -21,6 +22,8 @@ public class GameStarter {
         String hardLevel = "сложный";
 
         Dialog<Integer> levelDialog = new IntegerDialog(
+                reader,
+                writer,
                 askLevelMessage,
                 wrongLevelMessage,
                 List.of(easyLevel, mediumLevel, hardLevel)
@@ -35,7 +38,7 @@ public class GameStarter {
         Round round;
         while (true) {
             DifficultyLevel difficultyLevel = getDifficultyLevel(level);
-            round = new Round(difficultyLevel);
+            round = new Round(reader, writer, difficultyLevel);
 
             messageSender.sendMessage(Messages.ROUND_NUMBER, roundNumber);
             round.start();
@@ -47,7 +50,7 @@ public class GameStarter {
                 }
                 level++;
             } else {
-                if (!wantRepeatRound()) {
+                if (!wantRepeatRound(reader, writer)) {
                     break;
                 }
             }
@@ -61,10 +64,13 @@ public class GameStarter {
 
     }
 
-    private static boolean wantRepeatRound() {
+    private static boolean wantRepeatRound(InputReader reader,
+                                           OutputWriter writer) {
         String yesKey = "Да";
         String noKey = "Нет";
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
+                reader,
+                writer,
                 Messages.REPEAT_ROUND_MESSAGE,
                 Messages.WRONG_ROUND_NUMBER_MISTAKE,
                 yesKey,

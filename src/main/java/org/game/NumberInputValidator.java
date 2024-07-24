@@ -19,6 +19,9 @@ public class NumberInputValidator {
         } catch (NumberFormatException nfe) {
             return InputNumberStatus.NOT_A_NUMBER;
         }
+        if (input.length() > 1) {
+            return InputNumberStatus.HAS_LEADING_ZERO;
+        }
         return InputNumberStatus.CORRECT_NUMBER;
     }
 }

@@ -17,9 +17,4 @@ public class ConsoleOutputWriter implements OutputWriter{
     public void writeLine(String line) {
         writer.println(line);
     }
-
-    @Override
-    public void writeInt(Integer num) {
-
-    }
 }

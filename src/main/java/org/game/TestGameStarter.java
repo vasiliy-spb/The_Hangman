@@ -2,16 +2,18 @@ package org.game;
 
 import org.game.constants.DifficultyLevel;
 import org.game.constants.Messages;
-import org.game.dialogs.BooleanDialog;
-import org.game.dialogs.Dialog;
-import org.game.dialogs.IntegerDialog;
+import org.game.dialogs.*;
 
 import java.util.List;
 
 public class TestGameStarter {
     public static void main(String[] args) {
+        InputReader reader = new ConsoleInputReader();
+        OutputWriter writer = new ConsoleOutputWriter();
 
         Dialog<Integer> levelDialog = new IntegerDialog(
+                reader,
+                writer,
                 Messages.ASK_LEVEL_MESSAGE,
                 Messages.WRONG_LEVEL_MESSAGE,
                 List.of(Messages.EASY_LEVEL_KEY, Messages.MEDIUM_LEVEL_KEY, Messages.HARD_LEVEL_KEY)
@@ -26,7 +28,7 @@ public class TestGameStarter {
         Round round;
         while (true) {
             DifficultyLevel difficultyLevel = getDifficultyLevel(level);
-            round = new Round(difficultyLevel);
+            round = new Round(reader, writer, difficultyLevel);
 
             messageSender.sendMessage(Messages.ROUND_NUMBER, roundNumber);
             round.testStart();
@@ -39,7 +41,7 @@ public class TestGameStarter {
                 level++;
             } else {
                 messageSender.sendMessage(Messages.LOSE_ROUND_MESSAGE);
-                if (!wantRepeatRound()) {
+                if (!wantRepeatRound(reader, writer)) {
                     break;
                 }
             }
@@ -53,8 +55,11 @@ public class TestGameStarter {
 
     }
 
-    private static boolean wantRepeatRound() {
+    private static boolean wantRepeatRound(InputReader reader,
+                                           OutputWriter writer) {
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
+                reader,
+                writer,
                 Messages.REPEAT_ROUND_MESSAGE,
                 Messages.INCORRECT_INPUT_MISTAKE,
                 Messages.YES_KEY,
