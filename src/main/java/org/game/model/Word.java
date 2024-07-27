@@ -4,13 +4,11 @@ import java.util.*;
 
 public class Word {
     private Letter[] letters;
-    final private List<Character> mistakeList;
-    final private Set<Character> mistakeSet;
+    final private MistakeHolder mistakeHolder;
 
-    public Word(String text) {
+    public Word(String text, MistakeHolder mistakeHolder) {
         createLetters(text);
-        mistakeList = new ArrayList<>();
-        mistakeSet = new HashSet<>();
+        this.mistakeHolder = mistakeHolder;
     }
 
     public String getStringRepresentation() {
@@ -26,30 +24,12 @@ public class Word {
         return stringRepresentation.toString().trim();
     }
 
-    public String getMistakesHistory() {
-        StringBuilder mistakeHistoryString = new StringBuilder();
-        for (char letterValue : mistakeList) {
-            mistakeHistoryString.append(letterValue).append(" ");
-        }
-        return mistakeHistoryString.toString().trim();
-    }
-
-    public int getMistakeCount() {
-        return mistakeSet.size();
-    }
-
     private void createLetters(String text) {
         text = text.toUpperCase();
         letters = new Letter[text.length()];
         for (int i = 0; i < text.length(); i++) {
             letters[i] = new Letter(text.charAt(i), false);
         }
-    }
-
-    public void addMistake(char letterValue) {
-        if (mistakeSet.contains(letterValue)) return;
-        mistakeList.add(letterValue);
-        mistakeSet.add(letterValue);
     }
 
     public boolean containsLetterWithValue(char otherLetterValue) {
@@ -119,8 +99,7 @@ public class Word {
     public String toString() {
         return "Word{" +
                 "letters=" + Arrays.toString(letters) +
-                ", mistakeList=" + mistakeList +
-                ", mistakeSet=" + mistakeSet +
+                ", mistakeHolder=" + mistakeHolder +
                 '}';
     }
 }

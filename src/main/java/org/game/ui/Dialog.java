@@ -7,20 +7,16 @@ public abstract class Dialog<T> {
     final InputReader reader;
     final OutputWriter writer;
     final String text;
-    final String errorMessage;
-    Dialog(InputReader reader, OutputWriter writer, String text, String errorMessage) {
+    Validator validator;
+    Dialog(InputReader reader, OutputWriter writer, String text, Validator validator) {
         this.reader = reader;
         this.writer = writer;
         this.text = text;
-        this.errorMessage = errorMessage;
+        this.validator = validator;
     }
 
     public String getText() {
         return text;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
     }
 
     public abstract T getInput();

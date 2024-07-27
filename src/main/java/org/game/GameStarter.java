@@ -12,28 +12,31 @@ public class GameStarter {
         InputReader reader = new ConsoleInputReader();
         OutputWriter writer = new ConsoleOutputWriter();
 
+        IntegerInputValidator integerInputValidator = new IntegerInputValidator();
         Dialog<Integer> levelDialog = new IntegerDialog(
                 reader,
                 writer,
                 Messages.ASK_LEVEL_MESSAGE,
-                Messages.WRONG_LEVEL_MESSAGE,
+                integerInputValidator,
                 List.of(DifficultyLevel.EASY.getName(), DifficultyLevel.MEDIUM.getName(), DifficultyLevel.HARD.getName())
         );
 
+        BooleanInputValidator booleanInputValidator = new BooleanInputValidator();
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
                 reader,
                 writer,
                 Messages.REPEAT_ROUND_MESSAGE,
-                Messages.INCORRECT_INPUT_MISTAKE,
+                booleanInputValidator,
                 Messages.YES_KEY,
                 Messages.NO_KEY
         );
 
+        CharacterInputValidator characterInputValidator = new CharacterInputValidator();
         Dialog<Character> characterDialog = new CharacterDialog(
                 reader,
                 writer,
                 Messages.NEXT_LETTER,
-                Messages.GENERAL_LETTER_MISTAKE
+                characterInputValidator
         );
 
         DictionaryManager dictionaryManager = new DictionaryManager();

@@ -1,9 +1,10 @@
 package org.game;
 
+import org.game.ui.Dialog;
 import org.game.model.DifficultyLevel;
 import org.game.model.Messages;
+import org.game.model.MistakeHolder;
 import org.game.model.Word;
-import org.game.ui.Dialog;
 import org.game.io.MessageSender;
 import org.game.io.OutputWriter;
 import org.game.ui.HangmanPrinter;
@@ -19,6 +20,7 @@ public class Round {
     private final DifficultyLevel difficultyLevel;
     private final MessageSender messageSender;
     private final Dialog<Character> characterDialog;
+    private final MistakeHolder mistakeHolder;
 
     public Round(
             OutputWriter writer,
@@ -30,7 +32,8 @@ public class Round {
         this.writer = writer;
         this.characterDialog = characterDialog;
         this.difficultyLevel = difficultyLevel;
-        this.roundWord = new Word(textForWord);
+        this.mistakeHolder = new MistakeHolder();
+        this.roundWord = new Word(textForWord, mistakeHolder);
         this.hangmanPrinter = hangmanPrinter;
         this.messageSender = messageSender;
         this.lastLetterValue = '\0';
@@ -57,7 +60,7 @@ public class Round {
 
     void refreshDisplay() {
         writer.writeLine(Messages.CURRENT_WORD + roundWord.getStringRepresentation());
-        writer.writeLine(Messages.MISTAKES + "(" + roundWord.getMistakeCount() + ") " + roundWord.getMistakesHistory());
+        writer.writeLine(Messages.MISTAKES + "(" + mistakeHolder.getMistakeCount() + ") " + mistakeHolder.getMistakesHistory());
         writer.writeLine(Messages.LETTER + lastLetterValue);
     }
 
@@ -67,13 +70,13 @@ public class Round {
         if (isCorrectLetter(lastLetterValue)) {
             roundWord.openLetter(lastLetterValue);
         } else {
-            roundWord.addMistake(lastLetterValue);
+            mistakeHolder.addMistake(lastLetterValue);
         }
         if (isGameOver()) {
             gameOver();
         }
         refreshDisplay();
-        hangmanPrinter.printPicture(difficultyLevel, roundWord.getMistakeCount());
+        hangmanPrinter.printPicture(difficultyLevel, mistakeHolder.getMistakeCount());
     }
 
 
@@ -82,7 +85,7 @@ public class Round {
     }
 
     private boolean isGameOver() {
-        if (roundWord.getMistakeCount() >= roundWord.getLettersCount()) {
+        if (mistakeHolder.getMistakeCount() >= roundWord.getLettersCount()) {
             return true;
         }
         if (roundWord.isWordSolved()) {

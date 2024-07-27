@@ -1,6 +1,5 @@
 package org.game.ui;
 
-import org.game.model.InputNumberStatus;
 import org.game.io.InputReader;
 import org.game.io.OutputWriter;
 
@@ -8,25 +7,32 @@ import java.util.List;
 
 public class BooleanDialog extends Dialog<Boolean> {
     private final List<String> keys;
-    public BooleanDialog(InputReader reader, OutputWriter writer, String text, String errorMessage, String yesKey, String noKey) {
-        super(reader, writer, text, errorMessage);
+    public BooleanDialog(InputReader reader, OutputWriter writer, String text, Validator validator, String yesKey, String noKey) {
+        super(reader, writer, text, validator);
         this.keys = List.of(yesKey, noKey);
     }
 
     @Override
     public Boolean getInput() {
-        writer.writeLine(this.getText());
+        writer.writeString(this.getText());
+        writer.writeString(" (");
         for (int i = 0; i < keys.size(); i++) {
-            writer.writeString(String.format("%d — %s\n", i + 1, keys.get(i)));
+            writer.writeString(keys.get(i));
+            if (i < keys.size() - 1) {
+                writer.writeString("/");
+            }
         }
+        writer.writeLine("):");
         while (true) {
             String answer = reader.readOneLine().trim();
-            NumberInputValidator numberValidator = new NumberInputValidator();
-            InputNumberStatus inputNumberStatus = numberValidator.validateIntegerValue(answer, keys.size());
-            if (inputNumberStatus.equals(InputNumberStatus.CORRECT_NUMBER)) {
-                return Integer.parseInt(answer) == 1;
+            ValidationStatus validationStatus = validator.validate(answer);
+            if (validationStatus.equals(BooleanValidationStatus.TRUE_ANSWER)) {
+                return true;
             }
-            writer.writeLine(inputNumberStatus.getValue());
+            if (validationStatus.equals(BooleanValidationStatus.FALSE_ANSWER)) {
+                return false;
+            }
+            writer.writeLine(validationStatus.getStatusMessage());
         }
     }
 }
