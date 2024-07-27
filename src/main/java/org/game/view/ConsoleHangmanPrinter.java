@@ -1,9 +1,6 @@
-package org.game.ui;
+package org.game.view;
 
-import org.game.model.DifficultyLevel;
-import org.game.model.HangmanPictures;
-import org.game.io.OutputWriter;
-import org.game.ui.HangmanPrinter;
+import org.game.view.io.OutputWriter;
 
 public class ConsoleHangmanPrinter implements HangmanPrinter<String> {
     private final OutputWriter writer;

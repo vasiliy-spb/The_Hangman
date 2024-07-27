@@ -1,6 +1,6 @@
 package org.game;
 
-import org.game.model.DifficultyLevel;
+import org.game.view.DifficultyLevel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

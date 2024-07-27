@@ -1,4 +1,4 @@
-package org.game.model;
+package org.game.view;
 
 public enum DifficultyLevel {
     EASY (6, "лёгкий"),

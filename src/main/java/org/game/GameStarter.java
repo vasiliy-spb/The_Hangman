@@ -1,40 +1,56 @@
 package org.game;
 
-import org.game.model.DifficultyLevel;
-import org.game.model.Keys;
-import org.game.model.Messages;
-import org.game.io.*;
-import org.game.ui.*;
+import org.game.view.DifficultyLevel;
+import org.game.view.ConsoleHangmanPrinter;
+import org.game.view.HangmanPrinter;
+import org.game.view.io.*;
+import org.game.view.io.InputReader;
+import org.game.view.ui.*;
 
 import java.util.List;
 
 public class GameStarter {
+    public static final String ASK_LEVEL_MESSAGE = """
+                Игра Hangman начинается..
+                Выберете уровень сложности:
+                """;
+    public static final String REPEAT_ROUND_MESSAGE = "Повторить раунд?";
+    public static final String NEXT_LETTER = "Введите букву: ";
+    public static final String YES_KEY = "Да";
+    public static final String NO_KEY = "Нет";
+    public static final String ROUND_NUMBER = "Раунд ";
+    public static final String VICTORY_GAME_MESSAGE = "Вы победили!";
+    public static final String LOSE_ROUND_MESSAGE = "Раунд окончен — допущено слишком много ошибок.";
+    public static final String GAME_OVER_MESSAGE = "Игра окончена!";
     public static void main(String[] args) {
         InputReader reader = new ConsoleInputReader();
         OutputWriter writer = new ConsoleOutputWriter();
 
+        IntegerInputValidator integerInputValidator = new IntegerInputValidator();
         Dialog<Integer> levelDialog = new IntegerDialog(
                 reader,
                 writer,
-                Messages.ASK_LEVEL_MESSAGE,
-                Messages.WRONG_LEVEL_MESSAGE,
+                ASK_LEVEL_MESSAGE,
+                integerInputValidator,
                 List.of(DifficultyLevel.EASY.getName(), DifficultyLevel.MEDIUM.getName(), DifficultyLevel.HARD.getName())
         );
 
+        BooleanInputValidator booleanInputValidator = new BooleanInputValidator();
         Dialog<Boolean> repeatRoundDialog = new BooleanDialog(
                 reader,
                 writer,
-                Messages.REPEAT_ROUND_MESSAGE,
-                Messages.INCORRECT_INPUT_MISTAKE,
-                Keys.YES_KEY,
-                Keys.NO_KEY
+                REPEAT_ROUND_MESSAGE,
+                booleanInputValidator,
+                YES_KEY,
+                NO_KEY
         );
 
+        CharacterInputValidator characterInputValidator = new CharacterInputValidator();
         Dialog<Character> characterDialog = new CharacterDialog(
                 reader,
                 writer,
-                Messages.NEXT_LETTER,
-                Messages.GENERAL_LETTER_MISTAKE
+                NEXT_LETTER,
+                characterInputValidator
         );
 
         DictionaryManager dictionaryManager = new DictionaryManager();
@@ -49,20 +65,20 @@ public class GameStarter {
             String textForWord = dictionaryManager.getRandomWordForDifficultyLevel(difficultyLevel);
             Round round = new Round(writer, characterDialog, difficultyLevel, textForWord, hangmanPrinter, messageSender);
 
-            messageSender.sendMessage(Messages.ROUND_NUMBER, roundNumber);
+            messageSender.sendMessage(ROUND_NUMBER, roundNumber);
             round.start();
 
             if (isRoundWon(round)) {
                 if (isCurrentDifficultyLevelWasLast(round)) {
-                    messageSender.sendMessage(Messages.VICTORY_GAME_MESSAGE);
+                    messageSender.sendMessage(VICTORY_GAME_MESSAGE);
                     break;
                 }
                 roundNumber++;
                 difficultyLevelNumber++;
             } else {
-                messageSender.sendMessage(Messages.LOSE_ROUND_MESSAGE);
+                messageSender.sendMessage(LOSE_ROUND_MESSAGE);
                 if (!wantRepeatRound(repeatRoundDialog)) {
-                    messageSender.sendMessage(Messages.GAME_OVER_MESSAGE);
+                    messageSender.sendMessage(GAME_OVER_MESSAGE);
                     break;
                 }
             }

@@ -1,4 +1,4 @@
-package org.game.io;
+package org.game.view.io;
 
 public class ConsoleMessageSender implements MessageSender {
     private final OutputWriter writer;

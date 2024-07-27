@@ -1,4 +1,4 @@
-package org.game.model;
+package org.game.view;
 
 public final class HangmanPictures {
 
