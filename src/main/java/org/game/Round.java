@@ -52,22 +52,11 @@ public class Round {
         }
     }
 
-    void testStart() {
-        winner = false;
-        gameOver = false;
-        refreshDisplay();
-        while (!gameOver) {
-            writer.writeLine("roundWord = " + roundWord);
-            makeMove();
-        }
-    }
-
     void refreshDisplay() {
         writer.writeLine(CURRENT_WORD + roundWord.getStringRepresentation());
         writer.writeLine(MISTAKES + "(" + mistakeHolder.getMistakeCount() + ") " + mistakeHolder.getMistakesHistory());
         writer.writeLine(LETTER + lastLetterValue);
     }
-
 
     void makeMove() {
         lastLetterValue = Character.toUpperCase(characterDialog.getInput());
@@ -82,7 +71,6 @@ public class Round {
         refreshDisplay();
         hangmanPrinter.printPicture(difficultyLevel, mistakeHolder.getMistakeCount());
     }
-
 
     private boolean isCorrectLetter(char letterValue) {
         return roundWord.containsLetterWithValue(letterValue);

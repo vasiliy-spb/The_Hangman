@@ -7,7 +7,7 @@ public abstract class Dialog<T> {
     final InputReader reader;
     final OutputWriter writer;
     final String text;
-    Validator validator;
+    final Validator validator;
     Dialog(InputReader reader, OutputWriter writer, String text, Validator validator) {
         this.reader = reader;
         this.writer = writer;
